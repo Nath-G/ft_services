@@ -40,7 +40,7 @@ srcs=./srcs
 
 printf "\e[94m\n\n --- Starting Minikube ---\e[0m\n\n\n";
 	minikube start --cpus=2 --memory 4096 --vm-driver=docker 
-    minikube addons enable metallb 
+    # minikube addons enable metallb 
  	minikube addons enable metrics-server
     minikube addons enable default-storageclass
     minikube addons enable storage-provisioner
@@ -78,9 +78,12 @@ kubectl create secret generic -n metallb-system memberlist --from-literal=secret
 
 kubectl apply -f srcs/yaml/metallb-config.yaml
 docker build -t nginx-image $srcs/containers/nginx
-
+# docker build -t mysql-image $srcs/containers/mysql
+# docker build -t wordpress-image $srcs/containers/wordpress
  sleep 20
 kubectl apply -f srcs/yaml/nginx.yaml
+# kubectl apply -f srcs/yaml/mysql.yaml
+# kubectl apply -f srcs/yaml/wordpress.yaml
 
 # sleep 60
 

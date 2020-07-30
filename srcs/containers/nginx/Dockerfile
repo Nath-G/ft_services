@@ -12,8 +12,7 @@ COPY srcs/sshd_config /etc/ssh/
 
 RUN sh /tmp/install.sh
 
-EXPOSE 80
-#22 80 443
+EXPOSE 80 443 22
 
-ENTRYPOINT   nginx -g "daemon off;"
+ENTRYPOINT  nginx -g "daemon off;"
 # /etc/init.d/sshd start;
