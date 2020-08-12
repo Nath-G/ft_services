@@ -10,7 +10,6 @@ RUN sh /tmp/install.sh
 # COPY srcs/telegraf.conf /etc/telegraf.conf
 
 COPY srcs/my.cnf /usr/lib/my.cnf
-COPY srcs/id_rsa.pub ~/.ssh/id_rsa.pub
 
 VOLUME ["/var/lib/mysql"]
 
