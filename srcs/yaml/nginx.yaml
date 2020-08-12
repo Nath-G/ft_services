@@ -22,7 +22,7 @@ spec:
         - name: SSH_USER
           value: adminssh
         - name: SSH_PASSWORD
-          value: adminsshpw
+          value: adminssh
         ports:
         - containerPort: 80
 ---
@@ -30,6 +30,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nginx
+  annotations:
+    metallb.universe.tf/address-pool: nginx-ip
 spec:
   type: LoadBalancer
   selector:
@@ -41,3 +43,6 @@ spec:
   - port: 443
     name: https
     targetPort: 443
+  - port: 22
+    name: ssh
+    targetPort: 22
