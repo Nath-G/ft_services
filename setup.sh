@@ -10,15 +10,12 @@
 #                                                                              #
 # **************************************************************************** #
 
-#!/bin/sh
-
-
 SSH_USERNAME=adminssh
-SSH_PASSWORD=adminsshpw
+SSH_PASSWORD=adminssh
 FTPS_USERNAME=adminftps
 FTPS_PASSWORD=adminftps
 DB_USER=mysql
-DB_PASSWORD=pass
+DB_PASSWORD=password
 WP_USER=wpuser
 WP_PASSWORD=wppassword
 
@@ -40,7 +37,6 @@ srcs=./srcs
 
 printf "\e[94m\n\n --- Starting Minikube ---\e[0m\n\n\n";
 	minikube start --cpus=2 --memory 4096 --vm-driver=docker 
-    # minikube addons enable metallb 
  	minikube addons enable metrics-server
     minikube addons enable default-storageclass
     minikube addons enable storage-provisioner
@@ -61,7 +57,7 @@ eval $(minikube -p minikube docker-env)
  echo ".....................Building nginx new image...."
 # ----1st try
 # kubectl apply -f srcs/yaml/metallb.yaml
-sleep 60
+# sleep 60
 # sleep 30
 
 #check that metallb is running
@@ -77,17 +73,22 @@ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manife
 kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
 
 kubectl apply -f srcs/yaml/metallb-config.yaml
-docker build -t nginx-image $srcs/containers/nginx
-# docker build -t mysql-image $srcs/containers/mysql
-# docker build -t wordpress-image $srcs/containers/wordpress
- sleep 20
-kubectl apply -f srcs/yaml/nginx.yaml
-# kubectl apply -f srcs/yaml/mysql.yaml
-# kubectl apply -f srcs/yaml/wordpress.yaml
-
+docker build -t mysql-image $srcs/containers/mysql
+docker build -t wordpress-image $srcs/containers/wordpress
 # sleep 60
-
+kubectl apply -f srcs/yaml/mysql.yaml
+kubectl apply -f srcs/yaml/wordpress.yaml
+# sleep 60
 kubectl get all
 
-#kubectl get services | awk '/wordpress/ {print $4}'
-#MINIKUBE_IP="$(kubectl get node -o=custom-columns='DATA:status.addresses[0].address' | sed -n 2p)"
+WP_IP=`kubectl get services | awk '/wordpress/ {print $4}'`
+echo "..................WP_IP = $WP_IP..............."
+cp $srcs/containers/nginx/srcs/index_model.html	$srcs/containers/nginx/srcs/index.html
+sed -i "s/__MINIKUBE_IP__/$MINIKUBE_IP/g"		$srcs/containers/nginx/srcs/index.html
+sed -i "s/__WP_IP__/$WP_IP/g"		$srcs/containers/nginx/srcs/index.html
+
+docker build -t nginx-image $srcs/containers/nginx
+
+sleep 20
+kubectl apply -f srcs/yaml/nginx.yaml
+kubectl get all

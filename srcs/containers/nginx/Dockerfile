@@ -8,11 +8,17 @@ USER root
 COPY srcs/install.sh /tmp/install.sh
 COPY srcs/nginx.conf /etc/nginx/nginx.conf
 COPY srcs/index.html /var/www/localhost/htdocs/index.html
-COPY srcs/sshd_config /etc/ssh/
+COPY srcs/sshd_config /etc/ssh/sshd_config
+COPY srcs/id_rsa.pub /etc/ssh/id_rsa.pub
+COPY srcs/id_rsa /etc/ssh/id_rsa
+
+# RUN 	chmod 600 /etc/ssh/ssh_host_*
 
 RUN sh /tmp/install.sh
 
+VOLUME [ “/sys/fs/cgroup” ] 
+
 EXPOSE 80 443 22
 
-ENTRYPOINT  nginx -g "daemon off;"
+ENTRYPOINT  /etc/init.d/sshd start; nginx -g "daemon off;"
 # /etc/init.d/sshd start;
