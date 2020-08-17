@@ -14,9 +14,10 @@ COPY srcs/id_rsa /etc/ssh/id_rsa
 
 # RUN 	chmod 600 /etc/ssh/ssh_host_*
 
+VOLUME [ “/sys/fs/cgroup” ] 
+
 RUN sh /tmp/install.sh
 
-VOLUME [ “/sys/fs/cgroup” ] 
 
 EXPOSE 80 443 22
 

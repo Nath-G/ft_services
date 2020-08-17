@@ -8,6 +8,8 @@
 # *Tutos*
 * metallb:
 ** https://metallb.universe.tf/installation/
+* https://cloud.google.com/solutions/best-practices-for-building-containers?hl=fr
+* https://hub.docker.com/r/phpmyadmin/phpmyadmin/
 
 # *Github*
 * https://github.com/42f/ft_services

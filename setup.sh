@@ -74,21 +74,32 @@ kubectl create secret generic -n metallb-system memberlist --from-literal=secret
 
 kubectl apply -f srcs/yaml/metallb-config.yaml
 docker build -t mysql-image $srcs/containers/mysql
+# docker build -t pma-image $srcs/containers/phpmyadmin
 docker build -t wordpress-image $srcs/containers/wordpress
 # sleep 60
 kubectl apply -f srcs/yaml/mysql.yaml
+# kubectl apply -f srcs/yaml/phpmyadmin.yaml
 kubectl apply -f srcs/yaml/wordpress.yaml
 # sleep 60
 kubectl get all
 
 WP_IP=`kubectl get services | awk '/wordpress/ {print $4}'`
+PMA_IP=`kubectl get services | awk '/pma/ {print $4}'`
 echo "..................WP_IP = $WP_IP..............."
+echo "..................PMA_IP = $PMA_IP..............."
 cp $srcs/containers/nginx/srcs/index_model.html	$srcs/containers/nginx/srcs/index.html
 sed -i "s/__MINIKUBE_IP__/$MINIKUBE_IP/g"		$srcs/containers/nginx/srcs/index.html
-sed -i "s/__WP_IP__/$WP_IP/g"		$srcs/containers/nginx/srcs/index.html
+sed -i "s/__WP_IP__/$WP_IP/g"	            	$srcs/containers/nginx/srcs/index.html
+# sed -i "s/__PMA_IP__/$PMA_IP/g"		            $srcs/containers/nginx/srcs/index.html
+ sed -i "s/__SSH_USERNAME__/$SSH_USERNAME/g"	$srcs/containers/nginx/srcs/install.sh
+ sed -i "s/__SSH_PASSWORD__/$SSH_PASSWORD/g"	$srcs/containers/nginx/srcs/install.sh
 
 docker build -t nginx-image $srcs/containers/nginx
 
 sleep 20
 kubectl apply -f srcs/yaml/nginx.yaml
 kubectl get all
+rm -f ~/.ssh/known_hosts
+
+# kubectl exec -it nom du pod -- /bin/sh
+# docker run --name myadmin -d --link mysql_db_server:db -p 8080:80 phpmyadmin/phpmyadmin

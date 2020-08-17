@@ -1,5 +1,3 @@
-#!/bin/sh
-
 apk update
 apk add nginx openssl openrc openssh --no-cache #openrc permet d'activer le sercice automatiquement
 adduser --gecos GECOS adminssh
