@@ -17,8 +17,6 @@ spec:
         image: nginx-image
         imagePullPolicy: Never
         env:
-#        - name: CLUSTER_IP
-#          value: 172.17.0.2
         - name: SSH_USER
           value: adminssh
         - name: SSH_PASSWORD
@@ -31,8 +29,10 @@ kind: Service
 metadata:
   name: nginx
   annotations:
-    metallb.universe.tf/address-pool: nginx-ip
+    metallb.universe.tf/allow-shared-ip: shared-ip
+    # metallb.universe.tf/address-pool: nginx-ip
 spec:
+  loadBalancerIP: 172.17.0.2
   type: LoadBalancer
   selector:
     app: nginx
