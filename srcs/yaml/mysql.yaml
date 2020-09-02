@@ -17,7 +17,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim
   labels:
-    app: mysql
+    app: mysql-app
 spec:
   accessModes:
     - ReadWriteOnce
@@ -28,50 +28,62 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: mysql
+  name: mysql-svc
   labels:
-    app: mysql
+    app: mysql-app
 spec:
   # type: LoadBalancer
   # type: ClusterIP
   selector:
-    app: mysql
+    app: mysql-app
   ports:
-  - name: mysql
+  - name: http
     port: 3306
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-secrets
+type: Opaque
+data:
+  root-password: c3VwZXItc2VjcmV0LXBhc3N3b3Jk
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql
+  name: mysql-deployment
   labels:
-    app: mysql
+    app: mysql-app
 spec:
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: mysql
+      app: mysql-app
   template:
     metadata:
       labels:
-        app: mysql
+        app: mysql-app
     spec:
       containers:
       - name: mysql
         image: mysql-image
         imagePullPolicy: Never #IfNotPresent
         env:
-        - name: MYSQL_DATABASE #DB_NAME
-          value: wordpress
-        - name: MYSQL_USER #DB_USER
-          value: root
+       # - name:  DB_NAME #MYSQL_DATABASE
+       #   value: wordpress
+        #- name: DB_USER #MYSQL_USER
+         # value: wp_admin
         - name: MYSQL_ROOT_PASSWORD #DB_PASS
-          value: password
-        - name: MYSQL_PASSWORD
-          value: password
-        - name: MYSQL_HOME
-          value: "/etc/"
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secrets
+              key: root-password
+        #  value: c3VwZXItc2VjcmV0LXBhc3N3b3Jk
+        #- name: DB_PASSWORD #MYSQL_PASSWORD
+        #  value: admin
+        #- name: MYSQL_HOME
+         # value: "/etc/"
         ports:
         - containerPort: 3306
           name: mysql
