@@ -1,19 +1,18 @@
 FROM alpine
 
-USER root
+RUN apk update && apk add wget && mkdir /www \
+&& apk add php7 php7-fpm php7-opcache php7-gd php7-mysqli php7-zlib php7-curl php7-mbstring php7-json php7-session
 
-COPY srcs/install.sh /tmp/install.sh
-# COPY srcs/wp-config_model.php /var/www/localhost/htdocs/wp-config.php
-COPY srcs/wp-config.php /var/www/localhost/htdocs/wp-config.php
+RUN wget https://wordpress.org/latest.tar.gz \
+&& tar -xvf latest.tar.gz \
+&& mv wordpress/* /www \
+&& rm -rf /var/cache/apk/*
 
-ADD https://fr.wordpress.org/latest-fr_FR.tar.gz /tmp/
+COPY wp-config.php /www/wp-config.php
+COPY srcs/wp-content/uploads/2020/01/ /www/wp-content/uploads/2020/01/
+COPY srcs/setup.sh .
 
-RUN sh /tmp/install.sh && rm -f /tmp/install.sh
-#COPY srcs/wordpress_model.sql /var/www/localhost/htdocs/worpress.sql
-
-#COPY srcs/telegraf.conf /etc/telegraf.conf
- 
+RUN chmod +x setup.sh
+COPY wordpressfile/wp-content/uploads/2020/01/ /www/wp-content/uploads/2020/01/
 EXPOSE 5050
-
-ENTRYPOINT lighttpd -D -f /etc/lighttpd/lighttpd.conf
-#/etc/init.d/telegraf start; 
+CMD ./setup.sh
