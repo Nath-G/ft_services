@@ -8,11 +8,12 @@ RUN wget https://files.phpmyadmin.net/phpMyAdmin/5.0.1/phpMyAdmin-5.0.1-all-lang
 && mv phpMyAdmin-5.0.1-all-languages /www \
 && rm -rf /var/cache/apk/*
 
-COPY srcs/phpmyadmin.inc.php /www/config.inc.php
+# COPY srcs/phpmyadmin.inc.php /www/config.inc.php
+COPY srcs/config.inc.php /www/config.inc.php
 COPY srcs/setup.sh .
 
 RUN chmod +x setup.sh
 
 EXPOSE 5000
 
-CMD ./setup.sh
+ENTRYPOINT ./setup.sh

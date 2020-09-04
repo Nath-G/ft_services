@@ -8,11 +8,11 @@ RUN wget https://wordpress.org/latest.tar.gz \
 && mv wordpress/* /www \
 && rm -rf /var/cache/apk/*
 
-COPY wp-config.php /www/wp-config.php
+COPY srcs/wp-config.php /www/wp-config.php
 COPY srcs/wp-content/uploads/2020/01/ /www/wp-content/uploads/2020/01/
 COPY srcs/setup.sh .
 
 RUN chmod +x setup.sh
-COPY wordpressfile/wp-content/uploads/2020/01/ /www/wp-content/uploads/2020/01/
+COPY srcs/wp-content/uploads/2020/01/ /www/wp-content/uploads/2020/01/
 EXPOSE 5050
 CMD ./setup.sh

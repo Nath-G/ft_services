@@ -89,7 +89,7 @@ docker build -t nginx-image $srcs/containers/nginx
 docker build -t mysql-image $srcs/containers/mysql
 docker build -t wordpress-image $srcs/containers/wordpress
 docker build -t phpmyadmin-image $srcs/containers/phpmyadmin
-sleep 60
+# sleep 60
 kubectl apply -f srcs/yaml/nginx.yaml
 kubectl get all
 rm -f ~/.ssh/known_hosts
@@ -99,7 +99,7 @@ rm -f ~/.ssh/known_hosts
 kubectl apply -f srcs/yaml/mysql.yaml
 kubectl apply -f srcs/yaml/wordpress.yaml
 kubectl apply -f srcs/yaml/phpmyadmin.yaml
-sleep 60
+# sleep 60
 kubectl get all
 
 # WP_IP=`kubectl get services | awk '/wordpress/ {print $4}'`

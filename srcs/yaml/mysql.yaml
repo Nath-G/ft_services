@@ -70,23 +70,14 @@ spec:
         image: mysql-image
         imagePullPolicy: Never #IfNotPresent
         env:
-       # - name:  DB_NAME #MYSQL_DATABASE
-       #   value: wordpress
-        #- name: DB_USER #MYSQL_USER
-         # value: wp_admin
-        - name: MYSQL_ROOT_PASSWORD #DB_PASS
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secrets
-              key: root-password
-        #  value: c3VwZXItc2VjcmV0LXBhc3N3b3Jk
-        #- name: DB_PASSWORD #MYSQL_PASSWORD
-        #  value: admin
-        #- name: MYSQL_HOME
-         # value: "/etc/"
+          - name: MYSQL_ROOT_PASSWORD #DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secrets
+                key: root-password
         ports:
         - containerPort: 3306
-          name: mysql
+          # name: mysql
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql

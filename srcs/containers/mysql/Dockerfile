@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine
 
 # VOLUME /var/run/docker.sock:/var/run/docker.sock
 
