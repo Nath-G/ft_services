@@ -16,16 +16,13 @@ kind: Service
 metadata:
   name: phpmyadmin-svc
   annotations:
-    metallb.universe.tf/allow-shared-ip: shared-ip
-    # metallb.universe.tf/address-pool: pma-ip
+    metallb.universe.tf/address-pool: pma-ip
   labels:
     app: phpmyadmin-app
 spec:
   type: LoadBalancer
   ports:
   - port: 5000
-    # targetPort: 5000
-    # protocol: TCP
     name: phpmyadmin
   selector:
     app: phpmyadmin-app

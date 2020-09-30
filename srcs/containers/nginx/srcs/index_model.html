@@ -8,13 +8,11 @@
 		</br>
 		<div class="sites-avaibles">
 			<h3>sites availables</h3>
-			nginx: <a href="http://__MINIKUBE_IP__:80">http://__MINIKUBE_IP__:80</a></br>
-			or <a href="https://__MINIKUBE_IP__:443">https://__MINIKUBE_IP__:443</a></br>
-			wordpress: <a href="http://__MINIKUBE_IP__:5050/TheSiteIwant">TheSiteIwant</a></br>
-			wordpress: <a href="http://__MINIKUBE_IP__:5050/home">TheSiteIwant/home</a></br>
-			phpmyadmin: <a href="http://__MINIKUBE_IP__:5000">http://__MINIKUBE_IP__:5000</a></br>
-			wordpress: <a href="https://__MINIKUBE_IP__:5050/TheSiteIwant">https://__MINIKUBE_IP__:5050/TheSiteIwant</a></br>
-			phpmyadmin: <a href="__MINIKUBE_IP__:5000">http://__PMA_IP__:5000</a></br>
+			nginx: <a href="http://172.17.0.2:80">http://172.17.0.2:80</a></br>
+			or <a href="https://172.17.0.2:443">https://172.17.0.2:443</a></br>
+			wordpress: <a href="http://172.17.0.22:5050/home">TheSiteIwant</a></br>
+			wordpress: <a href="http://172.17.0.22:5050/wp-login.php">TheSiteIwant/wp-login.php</a></br>
+			phpmyadmin: <a href="http://172.17.0.42:5000">phpMyAdmin</a></br>
 <!--			grafana: <a href="http://__MINIKUBE_IP__:3000">http://__MINIKUBE_IP__:3000</a></br> -->
 		</div>
 		<div class="others">
@@ -23,7 +21,7 @@
 			nginx - ssh: ssh __SSH_USERNAME__@__MINIKUBE_IP__ -p 22</br>
 			password is __SSH_PASSWORD__</br>
 			</br>
-			ftps: open filezilla and connect to __MINIKUBE_IP__ on port 21</br>
+			ftps: open filezilla and connect to 172.17.0.62 on port 21</br>
 	__FTPS_USERNAME__:__FTPS_PASSWORD__ </br> 
 		</div>
 		<div class="useful-commands">

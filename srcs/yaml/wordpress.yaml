@@ -16,8 +16,7 @@ kind: Service
 metadata:
   name: wordpress-svc
   annotations:
-    metallb.universe.tf/allow-shared-ip: shared-ip
-    # metallb.universe.tf/address-pool: wp-ip
+    metallb.universe.tf/address-pool: wp-ip
   labels:
     app: wordpress-app
 spec:
@@ -27,12 +26,9 @@ spec:
       name: wordpress
   selector:
     app: wordpress-app
-#    tier: frontend
   type: LoadBalancer
-  # externalIPs:
-  #  - 172.17.0.255
 ---
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wordpress-deployment
@@ -42,14 +38,12 @@ spec:
   selector:
     matchLabels:
       app: wordpress-app
-      # tier: frontend
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
         app: wordpress-app
-        # tier: frontend
     spec:
       containers:
       - image: wordpress-image

@@ -74,12 +74,12 @@ kubectl create secret generic -n metallb-system memberlist --from-literal=secret
 
 kubectl apply -f srcs/yaml/metallb-config.yaml
 
-WP_IP=`kubectl get services | awk '/wordpress/ {print $4}'`
-PMA_IP=`kubectl get services | awk '/pma/ {print $4}'`
-echo "..................WP_IP = $WP_IP..............."
-echo "..................PMA_IP = $PMA_IP..............."
 cp $srcs/containers/nginx/srcs/index_model.html	$srcs/containers/nginx/srcs/index.html
 sed -i "s/__MINIKUBE_IP__/$MINIKUBE_IP/g"		$srcs/containers/nginx/srcs/index.html
+sed -i "s/__SSH_USERNAME__/$SSH_USERNAME/g"		$srcs/containers/nginx/srcs/index.html
+sed -i "s/__SSH_PASSWORD__/$SSH_PASSWORD/g"		$srcs/containers/nginx/srcs/index.html
+sed -i "s/__FTPS_USERNAME__/$FTPS_USERNAME/g"	$srcs/containers/nginx/srcs/index.html
+sed -i "s/__FTPS_PASSWORD__/$FTPS_PASSWORD/g"	$srcs/containers/nginx/srcs/index.html
 # sed -i "s/__WP_IP__/$WP_IP/g"	            	$srcs/containers/nginx/srcs/index.html
 # sed -i "s/__PMA_IP__/$PMA_IP/g"		            $srcs/containers/nginx/srcs/index.html
  sed -i "s/__SSH_USERNAME__/$SSH_USERNAME/g"	$srcs/containers/nginx/srcs/install.sh
@@ -89,19 +89,24 @@ docker build -t nginx-image $srcs/containers/nginx
 docker build -t mysql-image $srcs/containers/mysql
 docker build -t wordpress-image $srcs/containers/wordpress
 docker build -t phpmyadmin-image $srcs/containers/phpmyadmin
-# sleep 60
+docker build -t ftps-image $srcs/containers/ftps
+sleep 60
 kubectl apply -f srcs/yaml/nginx.yaml
+kubectl apply -f srcs/yaml/ftps.yaml
 kubectl get all
 rm -f ~/.ssh/known_hosts
 
 
-# sleep 60
+sleep 60
 kubectl apply -f srcs/yaml/mysql.yaml
 kubectl apply -f srcs/yaml/wordpress.yaml
 kubectl apply -f srcs/yaml/phpmyadmin.yaml
-# sleep 60
+sleep 60
 kubectl get all
-
+WP_IP=`kubectl get services | awk '/wordpress/ {print $4}'`
+PMA_IP=`kubectl get services | awk '/pma/ {print $4}'`
+echo "..................WP_IP = $WP_IP..............."
+echo "..................PMA_IP = $PMA_IP..............."
 # WP_IP=`kubectl get services | awk '/wordpress/ {print $4}'`
 # PMA_IP=`kubectl get services | awk '/pma/ {print $4}'`
 # echo "..................WP_IP = $WP_IP..............."

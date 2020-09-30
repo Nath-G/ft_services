@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: nginx
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -29,10 +29,8 @@ kind: Service
 metadata:
   name: nginx
   annotations:
-    metallb.universe.tf/allow-shared-ip: shared-ip
-    # metallb.universe.tf/address-pool: nginx-ip
+    metallb.universe.tf/address-pool: nginx-ip
 spec:
-  loadBalancerIP: 172.17.0.2
   type: LoadBalancer
   selector:
     app: nginx

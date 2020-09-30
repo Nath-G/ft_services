@@ -9,8 +9,20 @@ data:
     - name: default
       protocol: layer2
       addresses:
-      # - 10.100.5.30-10.100.5.35
-      # - 192.168.99.100-192.168.99.200
-      - 172.17.0.2-172.17.0.250
-      # - 192.168.1.240-192.168.1.250
-      # - 10.10.40.200-10.10.40.250
+      - 172.17.0.82-172.17.0.250
+    - name: nginx-ip
+      protocol: layer2
+      addresses:
+      - 172.17.0.2-172.17.0.21
+    - name: wp-ip
+      protocol: layer2
+      addresses:
+      - 172.17.0.22-172.17.0.41
+    - name: pma-ip
+      protocol: layer2
+      addresses:
+      - 172.17.0.42-172.17.0.61
+    - name: ftps-ip
+      protocol: layer2
+      addresses:
+      - 172.17.0.62-172.17.0.81
