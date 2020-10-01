@@ -55,7 +55,7 @@ spec:
         - name: DB_USER
           value: wp_admin
         - name: DB_PASSWORD
-          value: admin
+          value: wp_admin
         - name: DB_HOST
           value: mysql-svc
         ports:
