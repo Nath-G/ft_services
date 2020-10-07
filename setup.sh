@@ -12,12 +12,12 @@
 
 SSH_USERNAME=adminssh
 SSH_PASSWORD=adminssh
-FTPS_USERNAME=adminftps
-FTPS_PASSWORD=adminftps
+FTPS_USERNAME=ftps_admin
+FTPS_PASSWORD=ftps_admin
 DB_USER=mysql
 DB_PASSWORD=password
-WP_USER=wpuser
-WP_PASSWORD=wppassword
+WP_USER=wp_admin
+WP_PASSWORD=wp_admin
 
 srcs=./srcs
 
@@ -47,26 +47,11 @@ minikube ip > /tmp/.minikube.ip
 MINIKUBE_IP="$(kubectl get node -o=custom-columns='DATA:status.addresses[0].address' | sed -n 2p)"
 echo ".........minikube ip = $MINIKUBE_IP..........."
 
-# #model set-up
-
-# echo 'fin commande copie'
-
 eval $(minikube -p minikube docker-env)
 
 #get images in minikube
  echo ".....................Building nginx new image...."
-# ----1st try
-# kubectl apply -f srcs/yaml/metallb.yaml
-# sleep 60
-# sleep 30
 
-#check that metallb is running
-
-# kubectl get pods -n metallb-system
-#Configure MetalLB
-# kubectl apply -f srcs/yaml/metallb-config.yaml
-# ----
-# 2nd try
 kubectl get configmap kube-proxy -n kube-system -o yaml | sed -e "s/strictARP: false/strictARP: true/" | kubectl diff -f - -n kube-system
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/namespace.yaml
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/metallb.yaml
@@ -90,40 +75,23 @@ docker build -t mysql-image $srcs/containers/mysql
 docker build -t wordpress-image $srcs/containers/wordpress
 docker build -t phpmyadmin-image $srcs/containers/phpmyadmin
 docker build -t ftps-image $srcs/containers/ftps
+
 sleep 60
-kubectl apply -f srcs/yaml/nginx.yaml
-kubectl apply -f srcs/yaml/ftps.yaml
-kubectl get all
+# kubectl apply -f srcs/yaml/nginx.yaml
+
+
 rm -f ~/.ssh/known_hosts
 
 
-sleep 60
+# sleep 60
 kubectl apply -f srcs/yaml/mysql.yaml
 kubectl apply -f srcs/yaml/wordpress.yaml
 kubectl apply -f srcs/yaml/phpmyadmin.yaml
+kubectl apply -f srcs/yaml/ftps.yaml
 sleep 60
 kubectl get all
-WP_IP=`kubectl get services | awk '/wordpress/ {print $4}'`
-PMA_IP=`kubectl get services | awk '/pma/ {print $4}'`
-echo "..................WP_IP = $WP_IP..............."
-echo "..................PMA_IP = $PMA_IP..............."
 # WP_IP=`kubectl get services | awk '/wordpress/ {print $4}'`
-# PMA_IP=`kubectl get services | awk '/pma/ {print $4}'`
+# PMA_IP=`kubectl get services | awk '/phpmyadmin/ {print $4}'`
 # echo "..................WP_IP = $WP_IP..............."
 # echo "..................PMA_IP = $PMA_IP..............."
-# cp $srcs/containers/nginx/srcs/index_model.html	$srcs/containers/nginx/srcs/index.html
-# sed -i "s/__MINIKUBE_IP__/$MINIKUBE_IP/g"		$srcs/containers/nginx/srcs/index.html
-# sed -i "s/__WP_IP__/$WP_IP/g"	            	$srcs/containers/nginx/srcs/index.html
-# sed -i "s/__PMA_IP__/$PMA_IP/g"		            $srcs/containers/nginx/srcs/index.html
-#  sed -i "s/__SSH_USERNAME__/$SSH_USERNAME/g"	$srcs/containers/nginx/srcs/install.sh
-#  sed -i "s/__SSH_PASSWORD__/$SSH_PASSWORD/g"	$srcs/containers/nginx/srcs/install.sh
-
-# docker build -t nginx-image $srcs/containers/nginx
-
-# sleep 20
-# kubectl apply -f srcs/yaml/nginx.yaml
-# kubectl get all
-# rm -f ~/.ssh/known_hosts
-
 # kubectl exec -it nom du pod -- /bin/sh
-# docker run --name myadmin -d --link mysql_db_server:db -p 8080:80 phpmyadmin/phpmyadmin
