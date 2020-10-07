@@ -27,3 +27,15 @@
 = kubectl get services | awk '/NOM_DU_SERVICE/ {print $4}'
 * kubectl describe pod wordpress
 * se connecter à wp : http://172.17.0.22:5050/wp-login.php
+
+# *ftp access*
+sudo apt update
+sudo apt install lftp
+lftp -u adminftps 172.17.0.62
+lftp -u peer 172.17.0.62
+adminftps
+open sftp (client)
+not log skip...
+insert user : ftps_admin
+mp : ftps_admin
+click on connect
