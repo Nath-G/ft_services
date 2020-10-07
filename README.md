@@ -30,12 +30,14 @@
 
 # *ftp access*
 sudo apt update
-sudo apt install lftp
-lftp -u adminftps 172.17.0.62
-lftp -u peer 172.17.0.62
+sudo apt install filezilla
 adminftps
-open sftp (client)
-not log skip...
+open filezilla (client)
 insert user : ftps_admin
 mp : ftps_admin
+port: 21
 click on connect
+create a repository test on the serveur 172.17.0.62
+take the readme in the local repository then sent it on the test repository
+thanks to kubectl exec -it <nom du pod ex : ftps-6d6f76c9f> -- bin/sh go to the ftps pod
+then check that the file is in var/ftp/ repository
