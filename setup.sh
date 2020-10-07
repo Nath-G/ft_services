@@ -77,7 +77,7 @@ docker build -t phpmyadmin-image $srcs/containers/phpmyadmin
 docker build -t ftps-image $srcs/containers/ftps
 
 sleep 60
-# kubectl apply -f srcs/yaml/nginx.yaml
+kubectl apply -f srcs/yaml/nginx.yaml
 
 
 rm -f ~/.ssh/known_hosts
