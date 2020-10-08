@@ -30,8 +30,10 @@ metadata:
   name: nginx
   annotations:
     metallb.universe.tf/address-pool: nginx-ip
+    # metallb.universe.tf/allow-shared-ip: shared-ip
 spec:
   type: LoadBalancer
+  # loadBalancerIP: 172.17.0.2
   selector:
     app: nginx
   ports:
