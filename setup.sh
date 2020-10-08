@@ -66,7 +66,7 @@ sed -i "s/__SSH_PASSWORD__/$SSH_PASSWORD/g"		$srcs/containers/nginx/srcs/index.h
 sed -i "s/__FTPS_USERNAME__/$FTPS_USERNAME/g"	$srcs/containers/nginx/srcs/index.html
 sed -i "s/__FTPS_PASSWORD__/$FTPS_PASSWORD/g"	$srcs/containers/nginx/srcs/index.html
 # sed -i "s/__WP_IP__/$WP_IP/g"	            	$srcs/containers/nginx/srcs/index.html
-# sed -i "s/__PMA_IP__/$PMA_IP/g"		            $srcs/containers/nginx/srcs/index.html
+# sed -i "s/__PMA_IP__/$PMA_IP/g"               $srcs/containers/nginx/srcs/index.html
  sed -i "s/__SSH_USERNAME__/$SSH_USERNAME/g"	$srcs/containers/nginx/srcs/install.sh
  sed -i "s/__SSH_PASSWORD__/$SSH_PASSWORD/g"	$srcs/containers/nginx/srcs/install.sh
 
@@ -75,19 +75,18 @@ docker build -t mysql-image $srcs/containers/mysql
 docker build -t wordpress-image $srcs/containers/wordpress
 docker build -t phpmyadmin-image $srcs/containers/phpmyadmin
 docker build -t ftps-image $srcs/containers/ftps
-
+docker build -t influxdb-image $srcs/containers/influxdb
 sleep 60
-kubectl apply -f srcs/yaml/nginx.yaml
-
 
 rm -f ~/.ssh/known_hosts
 
-
 # sleep 60
+kubectl apply -f srcs/yaml/nginx.yaml
 kubectl apply -f srcs/yaml/mysql.yaml
 kubectl apply -f srcs/yaml/wordpress.yaml
 kubectl apply -f srcs/yaml/phpmyadmin.yaml
 kubectl apply -f srcs/yaml/ftps.yaml
+kubectl apply -f srcs/yaml/influxdb.yaml
 sleep 60
 kubectl get all
 # WP_IP=`kubectl get services | awk '/wordpress/ {print $4}'`
