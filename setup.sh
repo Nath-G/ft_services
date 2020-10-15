@@ -76,6 +76,7 @@ docker build -t wordpress-image $srcs/containers/wordpress
 docker build -t phpmyadmin-image $srcs/containers/phpmyadmin
 docker build -t ftps-image $srcs/containers/ftps
 docker build -t influxdb-image $srcs/containers/influxdb
+docker build -t grafana-image $srcs/containers/grafana
 sleep 60
 
 rm -f ~/.ssh/known_hosts
@@ -87,6 +88,7 @@ kubectl apply -f srcs/yaml/wordpress.yaml
 kubectl apply -f srcs/yaml/phpmyadmin.yaml
 kubectl apply -f srcs/yaml/ftps.yaml
 kubectl apply -f srcs/yaml/influxdb.yaml
+kubectl apply -f srcs/yaml/grafana.yaml
 sleep 60
 kubectl get all
 # WP_IP=`kubectl get services | awk '/wordpress/ {print $4}'`

@@ -1,0 +1,58 @@
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: pma-pv-claim
+#   labels:
+#     app: pma-deployment
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 1Gi
+# ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana-svc
+  annotations:
+    metallb.universe.tf/address-pool: grafana-ip
+  labels:
+    app: grafana-app
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 3000
+    name: grafana
+  selector:
+    app: grafana-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana-deployment
+  labels:
+    app: grafana-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana-app
+  template:
+    metadata:
+      labels:
+        app: grafana-app
+    spec:
+      containers:
+      - name: grafana
+        image: grafana-image
+        ports:
+        - containerPort: 3000
+        imagePullPolicy: Never
+        # env:
+        #   - name: PMA_HOST
+        #     value: mysql-svc
+        #   - name: PMA_PORT
+        #     value: "3306"
+        #   - name: PMA_USER
+        #     value: root

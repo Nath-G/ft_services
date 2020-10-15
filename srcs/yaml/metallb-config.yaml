@@ -9,7 +9,7 @@ data:
     - name: default
       protocol: layer2
       addresses:
-      - 172.17.0.82-172.17.0.250
+      - 172.17.0.102-172.17.0.250
     - name: nginx-ip
       protocol: layer2
       addresses:
@@ -26,3 +26,7 @@ data:
       protocol: layer2
       addresses:
       - 172.17.0.62-172.17.0.81
+    - name: grafana-ip
+      protocol: layer2
+      addresses:
+      - 172.17.0.82-172.17.0.101
