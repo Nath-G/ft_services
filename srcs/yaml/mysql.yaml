@@ -3,7 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim
   labels:
-    app: mysql-app
+    # app: mysql-app
+    app: mysql
 spec:
   accessModes:
     - ReadWriteOnce
@@ -14,12 +15,15 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: mysql-svc
+  # name: mysql-svc
+  name: mysql
   labels:
-    app: mysql-app
+    # app: mysql-app
+    app: mysql
 spec:
   selector:
-    app: mysql-app
+    # app: mysql-app
+    app: mysql
   ports:
   - name: http
     port: 3306
@@ -35,19 +39,23 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql-deployment
+  # name: mysql-deployment
+  name: mysql
   labels:
-    app: mysql-app
+    # app: mysql-app
+    app: mysql
 spec:
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: mysql-app
+      # app: mysql-app
+      app: mysql
   template:
     metadata:
       labels:
-        app: mysql-app
+        # app: mysql-app
+        app: mysql
     spec:
       containers:
       - name: mysql

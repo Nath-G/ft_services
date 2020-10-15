@@ -9,15 +9,15 @@
 		<div class="sites-avaibles">
 			<h2>sites availables</h2>
 				<h3>nginx</h3>
-				<a href="http://172.17.0.2:80">http://172.17.0.2:80</a></br>
-				or <a href="https://172.17.0.2:443">https://172.17.0.2:443</a></br>
-				<h3>wordpress:</h3><a href="http://172.17.0.22:5050/home">Open TheSiteIwant</a></br>
-				<a href="http://172.17.0.22:5050/wp-login.php">Open TheSiteIwant/wp-login.php</a></br>
+				<a href="http://__MINIKUBE_IP__:80">http://__MINIKUBE_IP__:80</a></br>
+				or <a href="https://__MINIKUBE_IP__:443">https://__MINIKUBE_IP__:443</a></br>
+				<h3>wordpress:</h3><a href="http://__MINIKUBE_IP__:5050/home">Open TheSiteIwant</a></br>
+				<a href="http://__MINIKUBE_IP__:5050/wp-login.php">Open TheSiteIwant/wp-login.php</a></br>
 				login: admin/admin user1/user1 user2/user2 user3/user3</br>
-				<h3>phpmyadmin:</h3> <a href="http://172.17.0.42:5000">phpMyAdmin</a></br>
-				login: wp_admin / wp_admin</br>
+				<h3>phpmyadmin:</h3> <a href="http://__MINIKUBE_IP__:5000">phpMyAdmin</a></br>
+				login: $WP_USER / wp_admin</br>
 				<h3>graFana:</h3>
-<!--			grafana: <a href="http://172.17.0._IP__:3000">http://__MINIKUBE_IP__:3000</a></br> -->
+			grafana: <a href="http://__MINIKUBE_IP__:3000">http://__MINIKUBE_IP__:3000</a></br>
 		</div>
 		<div class="others">
 			<h2>others</h2>
@@ -32,20 +32,22 @@
 			<p>	- sudo apt update  </br>
 				- sudo apt install filezilla </br>
 				- open filezilla (client) </br>
-				<p>* server: 172.17.0.62 </br>
+				<p>* server: __MINIKUBE_IP__ </br>
 					* port: 21 </br>
 					* insert user : __FTPS_USERNAME__ </br>
 					* mp : __FTPS_PASSWORD__ </br>
 					* click on connect </p>
 			</p>	</DIV>
 					<strong>test: 	</strong>	 </br>
-				- create a repository test on the serveur 172.17.0.62 </br>
 				- take the readme in the local repository then sent it on the test repository </br>
 				- thanks to</br>
 				  kubectl exec -it <nom du pod ex : ftps-6d6f76c9f> -- bin/sh </br>
 				  go to the ftps pod </br>
 				- then check that the file is in var/ftp/ repository </br>
-			open filezilla and connect to 172.17.0.62 on port 21</br>
+				- create a file test on the serveur __MINIKUBE_IP__ (echo toto > test.txt) </br>
+				- select it into filezilla then download it from the server to localhost
+				- check that the test file is now on localhost 
+			
 			<h3>influxDB connection:</h3>
 			- Go to the pod thanks to: <strong>kubectl exec -it <nom du pod> -- bin/sh</strong></br>
 			- In the pod input: influx</br>

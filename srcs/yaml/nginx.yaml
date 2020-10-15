@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  # name: nginx-deployment
+  name: nginx
 spec:
   selector:
     matchLabels:
@@ -29,8 +30,8 @@ kind: Service
 metadata:
   name: nginx
   annotations:
-    metallb.universe.tf/address-pool: nginx-ip
-    # metallb.universe.tf/allow-shared-ip: shared-ip
+    # metallb.universe.tf/address-pool: nginx-ip
+    metallb.universe.tf/allow-shared-ip: shared-ip
 spec:
   type: LoadBalancer
   # loadBalancerIP: 172.17.0.2

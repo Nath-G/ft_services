@@ -77,7 +77,7 @@ docker build -t phpmyadmin-image $srcs/containers/phpmyadmin
 docker build -t ftps-image $srcs/containers/ftps
 docker build -t influxdb-image $srcs/containers/influxdb
 docker build -t grafana-image $srcs/containers/grafana
-sleep 60
+# sleep 60
 
 rm -f ~/.ssh/known_hosts
 
@@ -91,6 +91,7 @@ kubectl apply -f srcs/yaml/influxdb.yaml
 kubectl apply -f srcs/yaml/grafana.yaml
 sleep 60
 kubectl get all
+minikube dashboard
 # WP_IP=`kubectl get services | awk '/wordpress/ {print $4}'`
 # PMA_IP=`kubectl get services | awk '/phpmyadmin/ {print $4}'`
 # echo "..................WP_IP = $WP_IP..............."

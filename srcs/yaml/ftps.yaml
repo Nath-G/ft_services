@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: ftps-pv-claim
   labels:
-    app: ftps-app
+    app: ftps
 spec:
   accessModes:
     - ReadWriteOnce
@@ -14,9 +14,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ftps-svc
+  name: ftps
   annotations:
-    metallb.universe.tf/address-pool: ftps-ip
+    # metallb.universe.tf/address-pool: ftps-ip
+    metallb.universe.tf/allow-shared-ip: shared-ip
   labels:
     app: ftps 
 spec:

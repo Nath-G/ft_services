@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: wp-pv-claim
   labels:
-    app: wordpress-app
+    app: wordpress
 spec:
   accessModes:
     - ReadWriteOnce
@@ -14,36 +14,37 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: wordpress-svc
+  name: wordpress
   annotations:
-    metallb.universe.tf/address-pool: wp-ip
+    # metallb.universe.tf/address-pool: wp-ip
+    metallb.universe.tf/allow-shared-ip: shared-ip
   labels:
-    app: wordpress-app
+    app: wordpress
 spec:
   ports:
     - port: 5050
       targetPort: 5050
       name: wordpress
   selector:
-    app: wordpress-app
+    app: wordpress
   type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wordpress-deployment
+  name: wordpress
   labels:
-    app: wordpress-app
+    app: wordpress
 spec:
   selector:
     matchLabels:
-      app: wordpress-app
+      app: wordpress
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: wordpress-app
+        app: wordpress
     spec:
       containers:
       - image: wordpress-image
@@ -57,7 +58,7 @@ spec:
         - name: DB_PASSWORD
           value: wp_admin
         - name: DB_HOST
-          value: mysql-svc
+          value: mysql
         ports:
         - containerPort: 5050
           name: wordpress
