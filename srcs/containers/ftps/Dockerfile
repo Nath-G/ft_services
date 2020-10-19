@@ -14,6 +14,6 @@ COPY srcs/setup.sh /tmp/
 RUN chmod +x /tmp/setup.sh
 # RUN mkdir /ftpsadmin
 
-EXPOSE 20 21 30000
-
+EXPOSE 20 21
+#enlever expose 30000
 ENTRYPOINT ["/tmp/setup.sh"]

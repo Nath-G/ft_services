@@ -64,3 +64,6 @@ if (!empty($_ENV['MYSQL_ROOT_PASSWORD']))
 
 $cfg['UploadDir'] = '';
 $cfg['SaveDir'] = '';
+//$cfg['PmaAbsoluteUri'] = '/phpmyadmin/';
+// $cfg[‘PmaAbsoluteUri’] = ‘./’;
+//https://app.slack.com/client/T039P7U66/C3QG85SG6/thread/C3QG85SG6-1602776233.353700

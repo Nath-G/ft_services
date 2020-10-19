@@ -45,8 +45,11 @@ spec:
       - name: influxdb
         image: influxdb-image
         imagePullPolicy: Never
+        securityContext: #add
+          privileged: true #add 
         ports:
-        - containerPort: 8086
+        - name: http #add
+          containerPort: 8086
         volumeMounts:
         - name: influxdb-persistent-storage
           mountPath: /var/lib/influxdb

@@ -64,7 +64,7 @@ spec:
         - containerPort: 21
           # hostPort: 21
         - containerPort: 20
-        - containerPort: 30000
+        # - containerPort: 30000
           # hostPort: 21000
         volumeMounts:
         - name: ftps-persistent-storage
