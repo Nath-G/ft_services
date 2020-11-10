@@ -1,15 +1,16 @@
 FROM alpine
 
-RUN apk update && apk add influxdb \
-&& apk add --no-cache --upgrade bash
+USER root
 
-RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing
+COPY srcs/install.sh /tmp/install.sh
+COPY srcs/setup.sh /setup.sh
+RUN chmod +x /setup.sh
 
-COPY srcs/setup.sh .
+RUN sh /tmp/install.sh && rm -f /tmp/install.sh
+
 COPY srcs/telegraf.conf /etc/telegraf.conf
 
-RUN chmod +x setup.sh
+EXPOSE 8086
 
-EXPOSE 8086 8088
-
-ENTRYPOINT /etc/init.d/telegraf start; ./setup.sh
+ENTRYPOINT /etc/init.d/telegraf start; influxd
+# ; ./setup.sh

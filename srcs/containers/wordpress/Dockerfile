@@ -10,9 +10,15 @@ RUN wget https://wordpress.org/latest.tar.gz \
 
 COPY srcs/wp-config.php /www/wp-config.php
 COPY srcs/wp-content/uploads/2020/01/ /www/wp-content/uploads/2020/01/
+COPY srcs/telegraf.conf /etc/telegraf.conf
+COPY srcs/install.sh .
 COPY srcs/setup.sh .
 
 RUN chmod +x setup.sh
+RUN  chmod +x install.sh
 COPY srcs/wp-content/uploads/2020/01/ /www/wp-content/uploads/2020/01/
 EXPOSE 5050
-CMD ./setup.sh
+RUN sh ./install.sh
+# CMD ./setup.sh
+
+ENTRYPOINT  /etc/init.d/telegraf start; ./setup.sh

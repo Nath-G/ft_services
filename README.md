@@ -94,6 +94,11 @@ then check that the file is in var/ftp/ repository
 * kubectl cp <pod_name>:<source_file_path> -c <container_name> -n <namespace_name> <target_local_file_path>
 * kubectl cp influxdb-74f548446f-226t9:/etc/telegraf.conf -c influxdb -n default ~/Bureau/telegraf.conf
 ou kubectl cp influxdb-74f548446f-226t9:/etc/telegraf.conf ~/Bureau/telegraf.conf
+* *Infuxdb* 
+* use influxdb
+* show MESUREMENTS
+* show USERS
+* SHOW RETENTION POLICIES ON influxdb
 
 # *ftp access*
 sudo apt update
