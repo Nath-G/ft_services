@@ -55,22 +55,22 @@ spec:
         imagePullPolicy: Never
         securityContext:
           privileged: true
-        # env:
-        # - name: DB_NAME
-        #   value: telegraf
-        # - name: INFLUXDB_HOST
-        #   value: influxdb
-        # - name: GF_SERVER_HTTP_PORT
-        #   value: "3000"
-        # - name: GF_AUTH_BASIC_ENABLED
-        #   value: "false"
-        # - name: GF_AUTH_ANONYMOUS_ENABLED
-        #   value: "true"
-        # - name: GF_AUTH_ANONYMOUS_ORG_ROLE
-        #   value: Admin
-      #   volumeMounts:
-      #   - name: grafana-persistent-storage
-      #     mountPath: /var/lib/grafana
+        env:
+        - name: DB_NAME
+          value: influxdb
+        - name: INFLUXDB_HOST
+          value: influxdb
+        - name: GF_SERVER_HTTP_PORT
+          value: "3000"
+        - name: GF_AUTH_BASIC_ENABLED
+          value: "false"
+        - name: GF_AUTH_ANONYMOUS_ENABLED
+          value: "true"
+        - name: GF_AUTH_ANONYMOUS_ORG_ROLE
+          value: Admin
+        volumeMounts:
+        - name: grafana-persistent-storage
+          mountPath: /var/lib/grafana
       volumes:
       - name: grafana-persistent-storage
         persistentVolumeClaim:

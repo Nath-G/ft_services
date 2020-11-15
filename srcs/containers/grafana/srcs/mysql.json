@@ -232,7 +232,7 @@
           ],
           "tags": [
             {
-              "key": "container_name",
+              "key": "container",
               "operator": "=",
               "value": "mysql"
             }

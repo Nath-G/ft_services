@@ -11,9 +11,15 @@ RUN mkdir -p /var/ftp
 
 COPY srcs/vsftpd.conf /etc/vsftpd/vsftpd.conf
 COPY srcs/setup.sh /tmp/
+COPY srcs/telegraf.conf /etc/telegraf.conf
+COPY srcs/install.sh .
+
 RUN chmod +x /tmp/setup.sh
+RUN chmod +x /install.sh
 # RUN mkdir /ftpsadmin
+
+RUN sh ./install.sh
 
 EXPOSE 20 21
 #enlever expose 30000
-ENTRYPOINT ["/tmp/setup.sh"]
+ENTRYPOINT /etc/init.d/telegraf start ; ./tmp/setup.sh

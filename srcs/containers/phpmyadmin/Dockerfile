@@ -12,9 +12,14 @@ RUN wget https://files.phpmyadmin.net/phpMyAdmin/5.0.1/phpMyAdmin-5.0.1-english.
 # COPY srcs/phpmyadmin.inc.php /www/config.inc.php
 COPY srcs/config.inc.php /www/config.inc.php
 COPY srcs/setup.sh .
+COPY ./srcs/install.sh ./install.sh
+COPY ./srcs/telegraf.conf ./etc/telegraf.conf
 
+RUN chmod +x install.sh
 RUN chmod +x setup.sh
+
+RUN sh /install.sh
 
 EXPOSE 5000
 
-ENTRYPOINT ./setup.sh
+ENTRYPOINT /etc/init.d/telegraf start ; ./setup.sh

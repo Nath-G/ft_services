@@ -12,5 +12,5 @@ COPY srcs/telegraf.conf /etc/telegraf.conf
 
 EXPOSE 8086
 
-ENTRYPOINT /etc/init.d/telegraf start; influxd
+ENTRYPOINT /etc/init.d/telegraf start; influxd; ./setup.sh
 # ; ./setup.sh
