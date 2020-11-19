@@ -103,7 +103,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "wordpress"
+              "value": "grafana"
             }
           ]
         },
@@ -146,7 +146,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "wordpress"
+              "value": "grafana"
             }
           ]
         }
@@ -282,7 +282,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "wordpress"
+              "value": "grafana"
             }
           ]
         },
@@ -325,7 +325,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "wordpress"
+              "value": "grafana"
             }
           ]
         }
@@ -421,7 +421,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "wordpress"
+              "value": "grafana"
             }
           ]
         }
@@ -553,7 +553,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "wordpress"
+              "value": "grafana"
             }
           ]
         }
@@ -612,7 +612,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Wordpress",
+  "title": "Grafana",
   "uid": "9Uc_O3sZk",
   "version": 1
 }
