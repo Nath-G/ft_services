@@ -61,12 +61,12 @@ kubectl apply -f srcs/yaml/metallb-config.yaml
 
 cp $srcs/containers/nginx/srcs/index_model.html	$srcs/containers/nginx/srcs/index.html
 		
-cp $srcs/telegraf_model.conf		$srcs/containers/nginx/srcs/telegraf.conf
-cp $srcs/telegraf_model.conf		$srcs/containers/ftps/srcs/telegraf.conf
-cp $srcs/telegraf_model.conf		$srcs/containers/mysql/srcs/telegraf.conf
-cp $srcs/telegraf_model.conf		$srcs/containers/wordpress/srcs/telegraf.conf
-cp $srcs/telegraf_model.conf		$srcs/containers/phpmyadmin/srcs/telegraf.conf
-cp $srcs/telegraf_model.conf		$srcs/containers/grafana/srcs/telegraf.conf
+# cp $srcs/telegraf_model.conf		$srcs/containers/nginx/srcs/telegraf.conf
+# cp $srcs/telegraf_model.conf		$srcs/containers/ftps/srcs/telegraf.conf
+# cp $srcs/telegraf_model.conf		$srcs/containers/mysql/srcs/telegraf.conf
+# cp $srcs/telegraf_model.conf		$srcs/containers/wordpress/srcs/telegraf.conf
+# cp $srcs/telegraf_model.conf		$srcs/containers/phpmyadmin/srcs/telegraf.conf
+# cp $srcs/telegraf_model.conf		$srcs/containers/grafana/srcs/telegraf.conf
 # cp $srcs/telegraf_model.conf		$srcs/containers/influxdb/srcs/telegraf.conf
 
 sed -i "s/__MINIKUBE_IP__/$MINIKUBE_IP/g"		$srcs/containers/nginx/srcs/index.html
@@ -74,7 +74,8 @@ sed -i "s/__SSH_USERNAME__/$SSH_USERNAME/g"		$srcs/containers/nginx/srcs/index.h
 sed -i "s/__SSH_PASSWORD__/$SSH_PASSWORD/g"		$srcs/containers/nginx/srcs/index.html
 sed -i "s/__FTPS_USERNAME__/$FTPS_USERNAME/g"	$srcs/containers/nginx/srcs/index.html
 sed -i "s/__FTPS_PASSWORD__/$FTPS_PASSWORD/g"	$srcs/containers/nginx/srcs/index.html
-# sed -i "s/__WP_IP__/$WP_IP/g"	            	$srcs/containers/nginx/srcs/index.html
+sed -i "s/__WP_USER__/$WP_USER/g"	           	$srcs/containers/nginx/srcs/index.html
+sed -i "s/__WP_PASSWORD__/$WP_PASSWORD/g"       $srcs/containers/nginx/srcs/index.html
 # sed -i "s/__PMA_IP__/$PMA_IP/g"               $srcs/containers/nginx/srcs/index.html
  sed -i "s/__SSH_USERNAME__/$SSH_USERNAME/g"	$srcs/containers/nginx/srcs/install.sh
  sed -i "s/__SSH_PASSWORD__/$SSH_PASSWORD/g"	$srcs/containers/nginx/srcs/install.sh

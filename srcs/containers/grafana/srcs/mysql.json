@@ -101,7 +101,7 @@
           ],
           "tags": [
             {
-              "key": "container_name",
+              "key": "host",
               "operator": "=",
               "value": "mysql"
             }
