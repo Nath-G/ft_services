@@ -12,8 +12,8 @@ RUN mv ./grafana-7.3.0/ ./grafana/
 COPY ./srcs/defaults.ini ./grafana/conf/
 # COPY ./srcs/defaults.ini ./grafana/conf/grafana.ini
 COPY ./srcs/setup.sh .
-COPY ./srcs/datasources.yml /grafana/conf/provisioning/datasources/
-COPY ./srcs/dashboard.yml /grafana/conf/provisioning/dashboards/
+COPY ./srcs/datasources.yaml /grafana/conf/provisioning/datasources/
+COPY ./srcs/dashboard.yaml /grafana/conf/provisioning/dashboards/
 COPY srcs/telegraf.conf /etc/telegraf.conf
 COPY srcs/install.sh .
 COPY ./srcs/*.json ./grafana/conf/provisioning/dashboards/
