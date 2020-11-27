@@ -9,7 +9,8 @@ RUN wget https://wordpress.org/latest.tar.gz \
 && rm -rf /var/cache/apk/*
 # RUN rm -r wordpress
 COPY srcs/nginx.conf /etc/nginx/nginx.conf
-
+# RUN rm etc/php7/php.ini
+# COPY srcs/php.ini etc/php7/php.ini
 RUN mkdir /run/nginx
 
 COPY srcs/wp-config.php /www/wp-config.php

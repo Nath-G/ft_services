@@ -10,6 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
+#!/bin/bash
+
 SSH_USERNAME=adminssh
 SSH_PASSWORD=adminssh
 FTPS_USERNAME=ftps_admin
@@ -36,7 +38,7 @@ srcs=./srcs
     fi
 
 printf "\e[94m\n\n --- Starting Minikube ---\e[0m\n\n\n";
-	minikube start --cpus=2 --memory 4096 --vm-driver=docker 
+	minikube start --cpus=2 --memory 3072 --vm-driver=docker 
  	minikube addons enable metrics-server
     minikube addons enable default-storageclass
     minikube addons enable storage-provisioner
@@ -80,28 +82,61 @@ sed -i "s/__WP_PASSWORD__/$WP_PASSWORD/g"       $srcs/containers/nginx/srcs/inde
  sed -i "s/__SSH_USERNAME__/$SSH_USERNAME/g"	$srcs/containers/nginx/srcs/install.sh
  sed -i "s/__SSH_PASSWORD__/$SSH_PASSWORD/g"	$srcs/containers/nginx/srcs/install.sh
 
-docker build -t nginx-image $srcs/containers/nginx
-docker build -t mysql-image $srcs/containers/mysql
-docker build -t wordpress-image $srcs/containers/wordpress
-docker build -t phpmyadmin-image $srcs/containers/phpmyadmin
-docker build -t ftps-image $srcs/containers/ftps
-docker build -t influxdb-image $srcs/containers/influxdb
+# docker build -t nginx-image $srcs/containers/nginx
+# docker build -t mysql-image $srcs/containers/mysql
+# docker build -t wordpress-image $srcs/containers/wordpress
+# docker build -t phpmyadmin-image $srcs/containers/phpmyadmin
+# docker build -t ftps-image $srcs/containers/ftps
+# docker build -t influxdb-image $srcs/containers/influxdb
 # docker build -t telegraf-image $srcs/containers/telegraf
-docker build -t grafana-image $srcs/containers/grafana
+# docker build -t grafana-image $srcs/containers/grafana
 # sleep 60
 
 rm -f ~/.ssh/known_hosts
 
 # # sleep 60
-kubectl apply -f srcs/yaml/nginx.yaml
-kubectl apply -f srcs/yaml/mysql.yaml
-kubectl apply -f srcs/yaml/wordpress.yaml
-kubectl apply -f srcs/yaml/phpmyadmin.yaml
-kubectl apply -f srcs/yaml/ftps.yaml
-kubectl apply -f srcs/yaml/influxdb.yaml
-kubectl apply -f srcs/yaml/grafana.yaml
+# kubectl apply -f srcs/yaml/nginx.yaml
+# kubectl apply -f srcs/yaml/mysql.yaml
+# kubectl apply -f srcs/yaml/wordpress.yaml
+# kubectl apply -f srcs/yaml/phpmyadmin.yaml
+# kubectl apply -f srcs/yaml/ftps.yaml
+# kubectl apply -f srcs/yaml/influxdb.yaml
+# kubectl apply -f srcs/yaml/grafana.yaml
 # kubectl apply -f srcs/yaml/telegraf.yaml
-sleep 60
+
+names="nginx mysql wordpress phpmyadmin ftps influxdb grafana"
+
+up (){
+	    kubectl get pods --ignore-not-found --field-selector status.phase=Running | grep -i $name | grep Running
+       # kubectl get pods | grep ErrImageNeverPull
+ 
+}
+
+launch () {
+	docker build -t $1-image $srcs/containers/$1
+	kubectl apply -f srcs/yaml/$1.yaml 
+	printf "\n${DARK}Waiting for $1${RESET}\n"
+	c=0
+	until up $1
+	do	
+			printf "${DARK}.${RESET}"
+					sleep 0.4
+			c=$((c+1))
+			if [ $c -gt 75 ];
+			then
+				printf "!! Timeout for service $1 !!"
+				break
+			fi
+	done
+	printf "\n"
+}
+
+for name in $names
+do
+launch $name
+done
+
+# sleep 60
 kubectl get all
 minikube dashboard
 # WP_IP=`kubectl get services | awk '/wordpress/ {print $4}'`

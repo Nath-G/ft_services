@@ -4,125 +4,71 @@
 		<title>ft_services</title>
 	</head>
 	<body>
-		<h1>ft_services</h1> on __MINIKUBE_IP__
+		<h1>ft_services</h1> on 172.17.0.2
 		</br>
 		<div class="sites-avaibles">
-			<h3>sites availables</h3>
-			nginx: <a href="http://__MINIKUBE_IP__:80">http://__MINIKUBE_IP__:80</a></br>
-			or <a href="https://__MINIKUBE_IP__:443">https://__MINIKUBE_IP__:443</a></br>
-			wordpress: <a href="http://__MINIKUBE_IP__:5050">http://__MINIKUBE_IP__:5050</a></br>
-			phpmyadmin: <a href="http://__MINIKUBE_IP__:5000">http://__MINIKUBE_IP__:5000</a></br>
-			wordpress: <a href="http://__WP_IP__:5050">http://___WP_IP__:5050</a></br>
-			phpmyadmin: <a href="http://__PMA_IP__:5000">http://__PMA_IP__:5000</a></br>
-<!--			grafana: <a href="http://__MINIKUBE_IP__:3000">http://__MINIKUBE_IP__:3000</a></br> -->
+			<h2>sites availables</h2>
+				<h3>nginx</h3>
+				<a href="http://172.17.0.2:80">http://172.17.0.2:80</a></br>
+				or <a href="https://172.17.0.2:443">https://172.17.0.2:443</a></br>
+				<h3>wordpress:</h3><a href="http://172.17.0.2:5050/home">Open TheSiteIwant</a></br>
+				<a href="http://172.17.0.2:5050/wp-login.php">Open TheSiteIwant/wp-login.php</a></br>
+				login: admin/admin user1/user1 user2/user2 user3/user3</br>
+				<h3>phpmyadmin:</h3> <a href="http://172.17.0.2:5000">phpMyAdmin</a></br>
+				login: wp_admin / wp_admin</br>
+				<h3>Grafana Monitoring:</h3>
+				<a href="http://172.17.0.2:3000/d/nagresel/ftps?orgId=1">FTPS Dashboard</a></br>
+				<a href="http://172.17.0.2:3000/d/nagresel/grafana?orgId=1">Grafana Dashboard</a></br>
+				<a href="http://172.17.0.2:3000/d/nagresel/influxdb?orgId=1">Influxdb Dashboard</a></br>
+				<a href="http://172.17.0.2:3000/d/nagresel/mysql?orgId=1">Mysql Dashboard</a></br>
+				<a href="http://172.17.0.2:3000/d/nagresel/phpmyadmin?orgId=1">Phpmyadmin Dashboard</a></br>
+				<a href="http://172.17.0.2:3000/d/nagresel/wordpress?orgId=1">Wordpress Dashboard</a></br>
 		</div>
 		<div class="others">
-			<h3>others</h3>
-<!--			nginx - ssh: ssh __SSH_USERNAME__@__MINIKUBE_IP__ -p 3022</br> -->
-			nginx - ssh: ssh __SSH_USERNAME__@__MINIKUBE_IP__ -p 22</br>
-			password is __SSH_PASSWORD__</br>
+			<h2>others</h2>
+<!--			nginx - ssh: ssh adminssh@172.17.0.2 -p 3022</br> -->
+			<h3>nginx - ssh connection:</h3> 
+			ssh adminssh@172.17.0.2 -p 22</br>
+			password is adminssh</br>
 			</br>
-			ftps: open filezilla and connect to __MINIKUBE_IP__ on port 21</br>
-	__FTPS_USERNAME__:__FTPS_PASSWORD__ </br> 
+			<h3>ftp connection:</h3>
+<!--			<p class="card-text mb-1 mt-3"><strong>Login:  </strong>  <code>admin</code></p> -->
+			<DIV><h4>Install filezilla: </h4>
+			<p>	- sudo apt update  </br>
+				- sudo apt install filezilla </br>
+				- open filezilla (client) </br>
+				<p>* server: 172.17.0.2 </br>
+					* port: 21 </br>
+					* insert user : ftps_admin </br>
+					* mp : ftps_admin </br>
+					* click on connect </p>
+			</p>	</DIV>
+					<strong>test: 	</strong>	 </br>
+				- take the readme in the local repository then sent it on the test repository </br>
+				- thanks to</br>
+				  kubectl exec -it <nom du pod ex : ftps-6d6f76c9f> -- bin/sh </br>
+				  go to the ftps pod </br>
+				- then check that the file is in var/ftp/ repository </br>
+				- create a file test on the serveur 172.17.0.2 (echo toto > test.txt) </br>
+				- select it into filezilla then download it from the server to localhost
+				- check that the test file is now on localhost 
+			
+			<h3>influxDB connection:</h3>
+			- Go to the pod thanks to: <strong>kubectl exec -it <nom du pod> -- bin/sh</strong></br>
+			- In the pod input: influx</br>
+			- The answer seems to be something like: <strong>"Connected to http://localhost:8086 version 1.8.0
+			InfluxDB shell version: 1.8.0"</strong></br>
 		</div>
 		<div class="useful-commands">
 			<h3>useful commands</h3>
 			dashboard:</br>
 			minikube dashboard</br>
 			</br>
+			go to the pod</br>
+			kubectl exec -it <nom du pod ex : ftps-6d6f76c9f> -- bin/sh </br>
+			</br>
 			launch a command on a pod:</br>
 			kubectl exec -i $(kubectl get pods | grep pod-name | cut -d" " -f1) -- command</br>
-		</div>
-		<div class="container-md mt-5">
-			<div class="row mt-5 mb-5 justify-content-center">
-				<h1 id="logo"><i>ft_services</i></h1>
-			</div>
-			<!-- <div class="row mt-5 mb-3">
-				<h3>Services:</h3>
-			</div> -->
-			<div class="row mt-5">
-			  <div class="card shadow-lg p-3 mb-5 border-0 col-lg mr-4 ml-4">
-				<div class="card-body">
-				  <h5 class="card-title">NGINX Ingress Controller</h5>
-				  <h6 class="card-subtitle mb-2 text-muted">Exposing web services to the outside world</h6>
-				  <h6 class="card-title mt-4">How to connect?</h6>
-				  <p class="card-text">The Ingress controller makes our NGINX service reachable by the IP address of our cluster.</h6>
-				  <p> If you're seeing this page, it is working!</p>
-				</div>
-			  </div>
-			  <div class="card shadow-lg p-3 mb-5 border-0 col-lg mr-4 ml-4">
-				<div class="card-body">
-				  <h5 class="card-title">NGINX</h5>
-				  <h6 class="card-subtitle mb-2 text-muted">Load balancing/reverse proxy</h6>
-				  <h6 class="card-title mt-4">How to connect?</h5>
-				  <p class="card-text">NGINX serves any page inside its web directory over HTTP/HTTPS.</p>
-				  <p> If you're seeing this page, it is working!</p>
-				  <h6 class="card-title mt-4">Yeah, great! What about SSH?</h5>
-				  <p class="card-text">You can SSH into the NGINX container using port 3337.</p>
-				  <p class="card-text mb-1 mt-3"><strong>Port:  </strong>  <code> 3337</code></p>
-				  <p class="card-text mb-1"><strong>Username:  </strong>  <code> jarvis</code></p>
-				  <p class="card-text"><strong>Password:  </strong>   <code>REPLACE_WITH_SSH_PASSWORD</code></p>
-				  <p class="card-text">Or just type this in terminal:</p>
-				  <p class="card-text"><code>ssh -p 3337 jarvis@REPLACE_WITH_MINIKUBE_IP</code></p>
-				</div>
-			  </div>
-			</div>
-			<div class="row mt-2">
-				<div class="card shadow-lg p-3 mb-5 border-0 col-lg mr-4 ml-4">
-					<div class="card-body">
-					  <h5 class="card-title">FTPS</h5>
-					  <h6 class="card-subtitle mb-2 text-muted">Secure FTP</h6>
-					  <p class="card-text mb-1 mt-3"><strong>Username:  </strong>  <code> uftp</code></p>
-					  <p class="card-text"><strong>Password:  </strong>   <code>REPLACE_WITH_UFTP_PASSWORD</code></p>
-					  <h6 class="card-title mt-4">How to connect?</h5>
-					  <p class="card-text">Use an FTP client (like FileZilla) to connect to <code>REPLACE_WITH_MINIKUBE_IP</code> (port 21)</p>
-					</div>
-				  </div>
-				  <div class="card shadow-lg p-3 mb-5 border-0 col-lg mr-4 ml-4">
-					<div class="card-body">
-					  <h5 class="card-title">Wordpress</h5>
-					  <h6 class="card-subtitle mb-2 text-muted">Blog</h6>
-					  <p class="card-text mb-1 mt-3"><strong>Admin login:  </strong>  <code>admin</code></p>
-					  <p class="card-text"><strong>Password:  </strong>   <code>42born2code</code></p>
-					  <p class="card-text mb-1 mt-3"><strong>User:  </strong>  <code>fordprefect</code></p>
-					  <p class="card-text"><strong>Password:  </strong>   <code>42born2code</code></p>
-					  <p class="card-text mb-1 mt-3"><strong>User:  </strong>  <code>trillian</code></p>
-					  <p class="card-text"><strong>Password:  </strong>   <code>42born2code</code></p>
-					  <p class="card-text"><strong>Change WP passwords immediately!</strong></p>
-					  <a class="btn btn-primary mt-4" href="http://REPLACE_WITH_MINIKUBE_IP:5050" role="button">Open Wordpress</a>
-					</div>
-				  </div>
-			</div>
-			<div class="row mt-2">
-			  <div class="card shadow-lg p-3 mb-5 border-0 col-lg mr-4 ml-4">
-				<div class="card-body">
-				  <h5 class="card-title">PHPMyAdmin</h5>
-				  <h6 class="card-subtitle mb-2 text-muted">DB administration</h6>
-				  <p class="card-text mb-1 mt-3"><strong>Login:  </strong>  <code>pmausr</code></p>
-				  <p class="card-text mb-1"><strong>Password:  </strong>  <code>REPLACE_WITH_PMA_PASSWORD</code></p>
-					<a class="btn btn-primary mt-4" href="http://REPLACE_WITH_MINIKUBE_IP:5000" role="button">Open PHPMyAdmin</a>
-				</div>
-			  </div>
-			  <div class="card shadow-lg p-3 mb-5 border-0 col-lg mr-4 ml-4">
-				<div class="card-body">
-				  <h5 class="card-title">Grafana</h5>
-				  <h6 class="card-subtitle mb-2 text-muted">Metrics and monitoring</h6>
-				  <p class="card-text mb-1 mt-3"><strong>Login:  </strong>  <code>admin</code></p>
-				  <p class="card-text mb-1"><strong>Password:  </strong>   <code>admin</code></p>
-				  <a class="btn btn-primary mt-4" href="http://REPLACE_WITH_MINIKUBE_IP:3000" role="button">Open Grafana</a>
-				</div>
-			  </div>
-			</div>
-			<div class="row mt-2">
-			  <div class="card shadow-lg p-3 mb-5 border-0 col-lg mr-4 ml-4">
-				<div class="card-body">
-				  <h5 class="card-title">InfluxDB</h5>
-				  <h6 class="card-subtitle mb-2 text-muted">Database for metrics</h6>
-				  <h6 class="card-title mt-4">How to connect?</h5>
-					<p class="card-text">InfluxDB is available over at <code>REPLACE_WITH_MINIKUBE_IP:8086</code></p>
-				</div>
-			  </div>
-			</div>
 		</div>
 	</body>
 </html>
