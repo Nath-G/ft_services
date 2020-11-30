@@ -36,7 +36,7 @@
 = kubectl get services | awk '/NOM_DU_SERVICE/ {print $4}'
 * kubectl describe pod wordpress
 * se connecter à wp : http://172.17.0.22:5050/wp-login.php
-* kubectl cp <pod_name>:<source_file_path> -c <container_name> -n <namespace_name> <target_local_file_path>
+* kubectl cp <pod_name>:<source_file_path> -c <container_name> -n <namespace_name> <target_local_file_path> (à la racine de ft_services : pas depuis le pod)
 * kubectl cp influxdb-74f548446f-226t9:/etc/telegraf.conf -c influxdb -n default ~/Bureau/telegraf.conf
 ou kubectl cp influxdb-74f548446f-226t9:/etc/telegraf.conf ~/Bureau/telegraf.conf
 
@@ -96,9 +96,10 @@ then check that the file is in var/ftp/ repository
 ou kubectl cp influxdb-74f548446f-226t9:/etc/telegraf.conf ~/Bureau/telegraf.conf
 * *Infuxdb* 
 * use influxdb
-* show MESUREMENTS
+* show MEASUREMENTS
 * show USERS
 * SHOW RETENTION POLICIES ON influxdb
+* select usage_idle from "cpu" where host = 'wordpress'
 
 # *ftp access*
 sudo apt update

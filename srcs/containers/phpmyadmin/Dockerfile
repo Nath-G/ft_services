@@ -3,8 +3,9 @@ FROM alpine
 RUN apk update && apk upgrade && apk add bash \
 && apk add php7 php7-fpm php7-opcache php7-gd php7-mysqli php7-zlib php7-curl php7-mbstring php7-json php7-session nginx
 # RUN wget https://files.phpmyadmin.net/phpMyAdmin/5.0.1/phpMyAdmin-5.0.1-all-languages.tar.gz \
-RUN wget https://files.phpmyadmin.net/phpMyAdmin/5.0.1/phpMyAdmin-5.0.1-english.tar.gz \
-&& tar -xvf phpMyAdmin-5.0.1-english.tar.gz \
+COPY srcs/phpMyAdmin-5.0.1-english.tar.gz .
+# RUN wget https://files.phpmyadmin.net/phpMyAdmin/5.0.1/phpMyAdmin-5.0.1-english.tar.gz \
+RUN tar -xf phpMyAdmin-5.0.1-english.tar.gz \
 && mv phpMyAdmin-5.0.1-english /www \
 && rm -rf /var/cache/apk/*
 
@@ -21,6 +22,8 @@ RUN chmod +x install.sh
 RUN chmod +x setup.sh
 
 RUN sh /install.sh
+
+RUN rm phpMyAdmin-5.0.1-english.tar.gz
 
 EXPOSE 5000
 

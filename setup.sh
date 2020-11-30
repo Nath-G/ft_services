@@ -38,11 +38,11 @@ srcs=./srcs
     fi
 
 printf "\e[94m\n\n --- Starting Minikube ---\e[0m\n\n\n";
-	minikube start --cpus=2 --memory 3072 --vm-driver=docker 
- 	minikube addons enable metrics-server
-    minikube addons enable default-storageclass
-    minikube addons enable storage-provisioner
-	minikube addons enable dashboard
+minikube start --cpus=2 --memory 3072 --vm-driver=docker 
+minikube addons enable metrics-server
+minikube addons enable default-storageclass
+minikube addons enable storage-provisioner
+minikube addons enable dashboard
 
 minikube ip > /tmp/.minikube.ip
 
@@ -51,8 +51,7 @@ echo ".........minikube ip = $MINIKUBE_IP..........."
 
 eval $(minikube -p minikube docker-env)
 
-#get images in minikube
- echo ".....................Building nginx new image...."
+printf "\e[94m\n\n --- ..............Building new image........... ---\e[0m\n\n\n";
 
 kubectl get configmap kube-proxy -n kube-system -o yaml | sed -e "s/strictARP: false/strictARP: true/" | kubectl diff -f - -n kube-system
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/namespace.yaml
@@ -63,14 +62,6 @@ kubectl apply -f srcs/yaml/metallb-config.yaml
 
 cp $srcs/containers/nginx/srcs/index_model.html	$srcs/containers/nginx/srcs/index.html
 		
-# cp $srcs/telegraf_model.conf		$srcs/containers/nginx/srcs/telegraf.conf
-# cp $srcs/telegraf_model.conf		$srcs/containers/ftps/srcs/telegraf.conf
-# cp $srcs/telegraf_model.conf		$srcs/containers/mysql/srcs/telegraf.conf
-# cp $srcs/telegraf_model.conf		$srcs/containers/wordpress/srcs/telegraf.conf
-# cp $srcs/telegraf_model.conf		$srcs/containers/phpmyadmin/srcs/telegraf.conf
-# cp $srcs/telegraf_model.conf		$srcs/containers/grafana/srcs/telegraf.conf
-# cp $srcs/telegraf_model.conf		$srcs/containers/influxdb/srcs/telegraf.conf
-
 sed -i "s/__MINIKUBE_IP__/$MINIKUBE_IP/g"		$srcs/containers/nginx/srcs/index.html
 sed -i "s/__SSH_USERNAME__/$SSH_USERNAME/g"		$srcs/containers/nginx/srcs/index.html
 sed -i "s/__SSH_PASSWORD__/$SSH_PASSWORD/g"		$srcs/containers/nginx/srcs/index.html
@@ -78,42 +69,32 @@ sed -i "s/__FTPS_USERNAME__/$FTPS_USERNAME/g"	$srcs/containers/nginx/srcs/index.
 sed -i "s/__FTPS_PASSWORD__/$FTPS_PASSWORD/g"	$srcs/containers/nginx/srcs/index.html
 sed -i "s/__WP_USER__/$WP_USER/g"	           	$srcs/containers/nginx/srcs/index.html
 sed -i "s/__WP_PASSWORD__/$WP_PASSWORD/g"       $srcs/containers/nginx/srcs/index.html
-# sed -i "s/__PMA_IP__/$PMA_IP/g"               $srcs/containers/nginx/srcs/index.html
- sed -i "s/__SSH_USERNAME__/$SSH_USERNAME/g"	$srcs/containers/nginx/srcs/install.sh
- sed -i "s/__SSH_PASSWORD__/$SSH_PASSWORD/g"	$srcs/containers/nginx/srcs/install.sh
+sed -i "s/__SSH_USERNAME__/$SSH_USERNAME/g"	$srcs/containers/nginx/srcs/install.sh
+sed -i "s/__SSH_PASSWORD__/$SSH_PASSWORD/g"	$srcs/containers/nginx/srcs/install.sh
 
-# docker build -t nginx-image $srcs/containers/nginx
-# docker build -t mysql-image $srcs/containers/mysql
-# docker build -t wordpress-image $srcs/containers/wordpress
-# docker build -t phpmyadmin-image $srcs/containers/phpmyadmin
-# docker build -t ftps-image $srcs/containers/ftps
-# docker build -t influxdb-image $srcs/containers/influxdb
-# docker build -t telegraf-image $srcs/containers/telegraf
-# docker build -t grafana-image $srcs/containers/grafana
-# sleep 60
+docker build -t nginx-image $srcs/containers/nginx
+docker build -t mysql-image $srcs/containers/mysql
+docker build -t wordpress-image $srcs/containers/wordpress
+docker build -t phpmyadmin-image $srcs/containers/phpmyadmin
+docker build -t ftps-image $srcs/containers/ftps
+docker build -t influxdb-image $srcs/containers/influxdb
+docker build -t grafana-image $srcs/containers/grafana
+
 
 rm -f ~/.ssh/known_hosts
 
-# # sleep 60
-# kubectl apply -f srcs/yaml/nginx.yaml
-# kubectl apply -f srcs/yaml/mysql.yaml
-# kubectl apply -f srcs/yaml/wordpress.yaml
-# kubectl apply -f srcs/yaml/phpmyadmin.yaml
-# kubectl apply -f srcs/yaml/ftps.yaml
-# kubectl apply -f srcs/yaml/influxdb.yaml
-# kubectl apply -f srcs/yaml/grafana.yaml
-# kubectl apply -f srcs/yaml/telegraf.yaml
+printf "\e[94m\n\n --- ..............launch services........... ---\e[0m\n\n\n";
 
-names="nginx mysql wordpress phpmyadmin ftps influxdb grafana"
+names="nginx ftps mysql wordpress phpmyadmin influxdb grafana"
+#  ftps nginx"
 
 up (){
 	    kubectl get pods --ignore-not-found --field-selector status.phase=Running | grep -i $name | grep Running
-       # kubectl get pods | grep ErrImageNeverPull
- 
+       # kubectl get pods | grep ErrImageNeverPull 
 }
 
 launch () {
-	docker build -t $1-image $srcs/containers/$1
+	# docker build -t $1-image $srcs/containers/$1
 	kubectl apply -f srcs/yaml/$1.yaml 
 	printf "\n${DARK}Waiting for $1${RESET}\n"
 	c=0
@@ -136,11 +117,5 @@ do
 launch $name
 done
 
-# sleep 60
 kubectl get all
 minikube dashboard
-# WP_IP=`kubectl get services | awk '/wordpress/ {print $4}'`
-# PMA_IP=`kubectl get services | awk '/phpmyadmin/ {print $4}'`
-# echo "..................WP_IP = $WP_IP..............."
-# echo "..................PMA_IP = $PMA_IP..............."
-# kubectl exec -it nom du pod -- /bin/sh
