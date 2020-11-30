@@ -5,22 +5,22 @@ $cfg['blowfish_secret'] = '';
 /**
  * List of env variables
  */
-$vars = array(
-    'PMA_HOST',
-	'PMA_PORT',
-	'PMA_USER',
-	'MYSQL_ROOT_PASSWORD'
-);
+// $vars = array(
+//     'PMA_HOST',
+// 	'PMA_PORT',
+// 	'PMA_USER',
+// 	'MYSQL_ROOT_PASSWORD'
+// );
 
-/**
- * Stock env variables in tab
- */
-foreach ($vars as $var) {
-    $env = getenv($var);
-    if (!isset($_ENV[$var]) && $env !== false) {
-        $_ENV[$var] = $env;
-    }
-}
+// /**
+//  * Stock env variables in tab
+//  */
+// foreach ($vars as $var) {
+//     $env = getenv($var);
+//     if (!isset($_ENV[$var]) && $env !== false) {
+//         $_ENV[$var] = $env;
+//     }
+// }
 
 /**
  * Only one server
@@ -34,7 +34,7 @@ $cfg['Servers'][$i]['compress'] = false;
 $cfg['Servers'][$i]['AllowNoPassword'] = false;
 
 // Use SSL for connection
-// $cfg['Servers'][$i]['ssl'] = true;
+$cfg['Servers'][$i]['ssl'] = false;
 // Client secret key
 // $cfg['Servers'][$i]['ssl_key'] = '/etc/ssl/certs/localhost.key';
 // Client certificate
@@ -50,14 +50,14 @@ $cfg['Servers'][$i]['AllowNoPassword'] = false;
 /**
  * Variable definition
  */
-if (!empty($_ENV['PMA_HOST']))
-	$cfg['Servers'][$i]['host'] = $_ENV['PMA_HOST'];
+// if (!empty($_ENV['PMA_HOST']))
+$cfg['Servers'][$i]['host'] = 'mysql';
 
-if (!empty($_ENV['PMA_PORT']))
-	$cfg['Servers'][$i]['port'] = $_ENV['PMA_PORT'];
+// if (!empty($_ENV['PMA_PORT']))
+$cfg['Servers'][$i]['port'] = '3306';
 
-if (!empty($_ENV['PMA_USER']))
-	$cfg['Servers'][$i]['user'] = $_ENV['PMA_USER'];
+// if (!empty($_ENV['PMA_USER']))
+$cfg['Servers'][$i]['user'] = 'root';
 
 if (!empty($_ENV['MYSQL_ROOT_PASSWORD']))
 	$cfg['Servers'][$i]['password'] = $_ENV['MYSQL_ROOT_PASSWORD'];
