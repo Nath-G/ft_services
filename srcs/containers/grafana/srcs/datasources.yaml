@@ -8,4 +8,4 @@ datasources:
   database: influxdb
   user: telegraf_user
   password: telegraf_password
-  uid: nagresel
+

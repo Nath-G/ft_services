@@ -22,7 +22,8 @@ define( 'DB_NAME', 'wordpress' );/** MySQL database username */
 define( 'DB_USER', 'wp_admin' );/** MySQL database password */
 define( 'DB_PASSWORD', 'wp_admin' );/** MySQL hostname */
 define( 'DB_HOST', 'mysql' );/** Database Charset to use in creating database tables. */
-define( 'DB_CHARSET', 'utf8mb4' );/** The Database Collate type. Don't change this if in doubt. */
+define( 'DB_CHARSET', 'utf8' );/** The Database Collate type. Don't change this if in doubt. */
+// define( 'DB_CHARSET', 'utf8mb4' );/** The Database Collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', '' );/**#@+
  * Authentication Unique Keys and Salts.
  *
@@ -59,6 +60,8 @@ $table_prefix = 'wp_';/**
  */
 define( 'WP_DEBUG', false );/* That's all, stop editing! Happy publishing. *//** Absolute path to the WordPress directory. */
 if ( ! defined( 'ABSPATH' ) ) {
-	define( 'ABSPATH', __DIR__ . '/' );
+	// define( 'ABSPATH', __DIR__ . '/' );
+	define( 'ABSPATH', __FILE__ . '/' );
 }/** Sets up WordPress vars and included files. */
 require_once ABSPATH . 'wp-settings.php';
+define( 'WP_ALLOW_REPAIR' , true ); //added
