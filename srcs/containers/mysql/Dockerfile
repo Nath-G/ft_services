@@ -1,7 +1,5 @@
 FROM alpine
 
-# VOLUME /var/run/docker.sock:/var/run/docker.sock
-
 # Installation
 RUN apk update \
 && apk add mariadb mariadb-client && apk add --no-cache --upgrade bash \
@@ -24,5 +22,4 @@ RUN sh /install.sh
 EXPOSE 3306
 
 # Start configuration script
-# ENTRYPOINT [ "./etc/init.d/telegraf start" ; "./init_docker.sh" ]
 ENTRYPOINT /etc/init.d/telegraf start ; ./init_docker.sh

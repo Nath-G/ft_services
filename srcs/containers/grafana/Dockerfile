@@ -3,8 +3,6 @@ FROM alpine
 RUN apk update && apk add --no-cache --upgrade bash \
 && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main libc6-compat
 
-# RUN wget https://dl.grafana.com/oss/release/grafana-7.3.0.linux-amd64.tar.gz \
-
 COPY srcs/grafana-7.3.0.linux-amd64.tar.gz .
 RUN tar -zxf grafana-7.3.0.linux-amd64.tar.gz \
 && rm /grafana-7.3.0/conf/defaults.ini \
@@ -12,7 +10,6 @@ RUN tar -zxf grafana-7.3.0.linux-amd64.tar.gz \
 RUN mv ./grafana-7.3.0/ ./grafana/
 
 COPY ./srcs/defaults.ini ./grafana/conf/
-# COPY ./srcs/defaults.ini ./grafana/conf/grafana.ini
 COPY ./srcs/setup.sh .
 COPY ./srcs/datasources.yaml ./grafana/conf/provisioning/datasources/
 COPY ./srcs/dashboard.yaml ./grafana/conf/provisioning/dashboards/

@@ -16,7 +16,6 @@ kind: Service
 metadata:
   name: ftps
   annotations:
-    # metallb.universe.tf/address-pool: ftps-ip
     metallb.universe.tf/allow-shared-ip: shared-ip
   labels:
     app: ftps 
@@ -29,9 +28,8 @@ spec:
      port: 20
   -  name: ftp-connection
      port: 21
-        # targetPort: 21
   -  name: pftp-data-0
-     port: 30000
+     port: 21000
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -45,7 +43,6 @@ spec:
       app: ftps
   strategy:
     type: Recreate
-  # replicas: 1
   template:
     metadata:
       labels:
@@ -56,16 +53,13 @@ spec:
         image: ftps-image
         imagePullPolicy: Never
         env:
-        - name: FTPS_USER #FTPS_USER
+        - name: FTPS_USER
           value: ftps_admin
-        - name: FTPS_PASSWORD #FTPS_PASSWORD
+        - name: FTPS_PASSWORD
           value: ftps_admin
         ports:
         - containerPort: 21
-          # hostPort: 21
         - containerPort: 20
-        # - containerPort: 30000
-          # hostPort: 21000
         volumeMounts:
         - name: ftps-persistent-storage
           mountPath: /var/ftp
