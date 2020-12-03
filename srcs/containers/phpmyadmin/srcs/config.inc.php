@@ -1,7 +1,7 @@
 <?php
 
-$cfg['blowfish_secret'] = '';
-
+// $cfg['blowfish_secret'] = '';
+$cfg['blowfish_secret'] = 'B2g:sb;OY;n3WpHxc410]cQUZNfuEe8u';
 /**
  * List of env variables
  */

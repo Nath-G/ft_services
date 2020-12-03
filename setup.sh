@@ -31,10 +31,10 @@ srcs=./srcs
         We will attempt to fix it. In order for it to start working, you\n
         will have to log out and login again. ---\e[0m\n\n\n";
         sudo usermod -aG docker $(whoami);
-        printf "\e[94m\n\n --- The fix is applied. The VM has to be log out and log in again. ---\e[0m\n\n\n";
+        printf "\e[0;35m\n\n --- The fix is applied. The VM has to be log out and log in again. ---\e[0m\n\n\n";
         exit 1;
     else
-        printf "\e[94m\n\n --- Docker works fine.  ---\e[0m\n\n\n";
+        printf "\e[0;35m\n\n --- Docker works fine.  ---\e[0m\n\n\n";
     fi
 
 printf "\e[1;35m\n\n --- Starting Minikube ---\e[0m\n\n\n";
@@ -85,7 +85,7 @@ rm -f ~/.ssh/known_hosts
 printf "\e[1;35m\n\n ---          launch services          ---\e[0m\n\n\n";
 
 names="nginx ftps mysql wordpress phpmyadmin influxdb grafana"
-#  ftps nginx wordpress influxdb grafana"
+
 
 up (){
 	    kubectl get pods --ignore-not-found --field-selector status.phase=Running | grep -i $name | grep Running
@@ -93,16 +93,16 @@ up (){
 
 launch () {
 	kubectl apply -f srcs/yaml/$1.yaml 
-	printf "\e[0;35m\nCreating resources for $1${RESET}\e[0m\n"
+	printf "\e[94m\nCreating resources for $1${RESET}\e[0m"
 	c=0
 	until up $1
 	do	
-			printf "\e[0;35m.${RESET}\e[0m"
+			printf "\e[94m.${RESET}\e[0m"
 					sleep 0.4
 			c=$((c+1))
 			if [ $c -gt 75 ];
 			then
-				printf "\e[0;33m!! Timeout for $1 !!\e[0m"
+				printf "\e[0;33m\n!! Timeout for $1 !!\e[0m"
 				break
 			fi
 	done

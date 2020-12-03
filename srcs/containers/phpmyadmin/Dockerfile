@@ -16,10 +16,11 @@ COPY ./srcs/install.sh ./install.sh
 COPY ./srcs/telegraf.conf ./etc/telegraf.conf
 
 RUN mkdir /run/nginx
+RUN mkdir /www/tmp
 
 RUN chmod +x install.sh
 RUN chmod +x setup.sh
-
+RUN chmod -R 777 /www/tmp/
 RUN sh /install.sh
 
 RUN rm phpMyAdmin-5.0.1-english.tar.gz

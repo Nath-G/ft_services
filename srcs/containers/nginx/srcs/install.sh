@@ -1,3 +1,4 @@
+#!/bin/sh
 apk update
 apk add nginx openssl openrc openssh --no-cache #openrc activate automatically the service
 
