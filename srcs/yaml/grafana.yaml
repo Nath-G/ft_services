@@ -16,7 +16,6 @@ kind: Service
 metadata:
   name: grafana
   annotations:
-    # metallb.universe.tf/address-pool: grafana-ip
     metallb.universe.tf/allow-shared-ip: shared-ip
   labels:
     app: grafana
@@ -36,9 +35,8 @@ metadata:
   labels:
     app: grafana
 spec:
-  strategy: #add
-    type: Recreate #add
-  # replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: grafana

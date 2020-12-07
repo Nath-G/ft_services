@@ -16,7 +16,6 @@ kind: Service
 metadata:
   name: wordpress
   annotations:
-    # metallb.universe.tf/address-pool: wp-ip
     metallb.universe.tf/allow-shared-ip: shared-ip
   labels:
     app: wordpress

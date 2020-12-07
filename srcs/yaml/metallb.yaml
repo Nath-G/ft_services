@@ -80,7 +80,6 @@ rules:
   resources: ["events"]
   verbs: ["create"]
 ---
-## Role bindings
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -143,7 +142,7 @@ roleRef:
   kind: Role
   name: leader-election
 ---
-apiVersion: apps/v1 #apps/v1beta2
+apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   namespace: metallb-system
@@ -196,7 +195,7 @@ spec:
             add:
             - net_raw
 ---
-apiVersion: apps/v1 #apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: metallb-system
@@ -223,7 +222,7 @@ spec:
       terminationGracePeriodSeconds: 0
       securityContext:
         runAsNonRoot: true
-        runAsUser: 65534 # nobody
+        runAsUser: 65534
       containers:
       - name: controller
         image: metallb/controller:v0.6.1

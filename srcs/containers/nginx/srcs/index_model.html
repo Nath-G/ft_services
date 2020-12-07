@@ -23,16 +23,15 @@
 				<a href="http://__MINIKUBE_IP__:3000/d/nagreselmysql/mysql?orgId=1">Mysql Dashboard</a></br>
 				<a href="http://__MINIKUBE_IP__:3000/d/nagreselphpmyadmin/phpmyadmin?orgId=1">Phpmyadmin Dashboard</a></br>
 				<a href="http://__MINIKUBE_IP__:3000/d/nagreselwordpress/wordpress?orgId=1">Wordpress Dashboard</a></br>
-		</div>
+				* Check the at which time start the data in order to persistence</br>
+			</div>
 		<div class="others">
 			<h2>others</h2>
-<!--			nginx - ssh: ssh __SSH_USERNAME__@__MINIKUBE_IP__ -p 3022</br> -->
 			<h3>nginx - ssh connection:</h3> 
 			ssh __SSH_USERNAME__@__MINIKUBE_IP__ -p 22</br>
 			password is __SSH_PASSWORD__</br>
 			</br>
 			<h3>ftp connection:</h3>
-<!--			<p class="card-text mb-1 mt-3"><strong>Login:  </strong>  <code>admin</code></p> -->
 			<DIV><h4>Install filezilla: </h4>
 			<p>	- sudo apt update  </br>
 				- sudo apt install filezilla </br>
@@ -58,6 +57,9 @@
 			- In the pod input: influx</br>
 			- The answer seems to be something like: <strong>"Connected to http://localhost:8086 version 1.8.0
 			InfluxDB shell version: 1.8.0"</strong></br>
+			<strong>"Test the data persistence :"</strong></br>
+			- kubectl exec deploy/influxdb -- pkill influx </br>
+			- Go to Grafana on influxdb dashboard then check starting data time is still the same after the new loading
 		</div>
 		<div class="useful-commands">
 			<h3>useful commands</h3>
