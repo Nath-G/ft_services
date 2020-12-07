@@ -2,18 +2,18 @@
 42 Project - Cursus 2019 - 2020
 
 # *How to run the project*
-For this project, the VM (OS Ubuntu 18.04)has to have following settings : 
+For this project, the VM (OS Linux Ubuntu 18.04) has to have following settings : 
 - processor : 2 
 - RAM : 3072MB
 
 The script has to be launched with a user in docker group.
 So you have to :
-1- execute the script in order to add current user to the script (password is required), 
-2- then stop and re-start the VM (with the good settings)
-3- and execute a 2nd time the setup.
-Command to execute the script :
+- 1- execute the script in order to add current user to the script (password is required), 
+- 2- then stop and re-start the VM (with the good settings)
+- 3- and execute a 2nd time the setup.
+- Command to execute the script :
 ./setup.sh
-When all the processes run, you can go to 172.17.0.2 thanks to the web explorer, some advices are displayed.
+- When all the processes run, you can go to 172.17.0.2 thanks to the web explorer, some advices are displayed.
 
 # *Documentation*
 * https://kubernetes.io/fr/docs/concepts/services-networking/service/
