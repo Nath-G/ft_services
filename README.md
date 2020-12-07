@@ -15,6 +15,10 @@ So you have to :
 ./setup.sh
 - When all the processes run, you can go to 172.17.0.2 thanks to the web explorer, some advices are displayed.
 
+# For further
+* Environment variable for wp and phpmyadmin : 
+- https://medium.com/@tomahock/passing-system-environment-variables-to-php-fpm-when-using-nginx-a70045370fad
+
 # *Documentation*
 * https://kubernetes.io/fr/docs/concepts/services-networking/service/
 * https://kubernetes.io/fr/docs/concepts/workloads/pods/
