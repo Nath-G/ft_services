@@ -61,8 +61,7 @@ kubectl create secret generic -n metallb-system memberlist --from-literal=secret
 kubectl apply -f srcs/yaml/metallb-config.yaml
 
 cp $srcs/containers/nginx/srcs/index_model.html	$srcs/containers/nginx/srcs/index.html
-		
-sed -i "s/__MINIKUBE_IP__/$MINIKUBE_IP/g"		$srcs/containers/nginx/srcs/index.html
+
 sed -i "s/__SSH_USERNAME__/$SSH_USERNAME/g"		$srcs/containers/nginx/srcs/index.html
 sed -i "s/__SSH_PASSWORD__/$SSH_PASSWORD/g"		$srcs/containers/nginx/srcs/index.html
 sed -i "s/__FTPS_USERNAME__/$FTPS_USERNAME/g"	$srcs/containers/nginx/srcs/index.html
@@ -93,20 +92,20 @@ up (){
 
 launch () {
 	kubectl apply -f srcs/yaml/$1.yaml 
-	printf "\e[94m\nCreating resources for $1${RESET}\e[0m"
+	printf "\e[94m\nCreating resources for $1${RESET}\e[0m";
 	c=0
 	until up $1
 	do	
-			printf "\e[94m.${RESET}\e[0m"
+			printf "\e[94m.${RESET}\e[0m";
 					sleep 0.4
 			c=$((c+1))
 			if [ $c -gt 75 ];
 			then
-				printf "\e[0;33m\n!! Timeout for $1 !!\e[0m"
+				printf "\e[0;33m\n!! Timeout for $1 !!\e[0m";
 				break
 			fi
 	done
-	printf "\n"
+	printf "\n";
 }
 
 for name in $names
@@ -115,4 +114,6 @@ launch $name
 done
 
 kubectl get all
-minikube dashboard
+
+printf "\e[0;92m\nYou can try to launch the minikube dashboard with the following commande:\n\e[0m";
+printf "\e[94m\nminikube dashboard\n\e[0m";
