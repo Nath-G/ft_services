@@ -2,9 +2,10 @@
 42 Project - Cursus 2019 - 2020
 
 # *How to run the project*
-For this project, the VM (OS Linux Ubuntu 18.04) has to have following settings : 
+For this project, the VM (OS Linux Ubuntu 18.04 https://cdn.42.fr/xubuntu-42.ova ) has to have following settings : 
 - processor : 2 
 - RAM : 3072MB
+- Minikube and docker are required
 
 The script has to be launched with a user in docker group.
 So you have to :
